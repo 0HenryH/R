@@ -7,11 +7,13 @@ library(fda)
 
 #set y
 y = CanadianWeather$dailyAv[,"Vancouver","Temperature.C"]
-
+temperature = y
+day = 1:365
+VancouverT = data.frame(day,y)
 #plot the temperature data
 windows()
-plot(1:365,y,xlab = "Day", ylab = "Temperature", main = "Vancouver")
-
+#plot(1:365,y,xlab = "Day", ylab = "Temperature", main = "Vancouver")
+ggplot(VancouverT,aes(x = day, y = temperature),colour = 50) + geom_point() + labs(title = "Vancouver")+theme(plot.title=element_text(hjust=0.5))
 #create Fourier Basis
 FourierBasis = create.fourier.basis(rangeval = c(1,365),nbasis = 13)
 #plot the basis function

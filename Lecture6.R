@@ -1,24 +1,30 @@
+library('fda')
 
+#data loaded in Lecture3.R
+#The first argument is basis function, second is to define the roughness penalty(here is second derivative),third is the penalty coefficiency
+#fdPar create an object which store these definations
 
 fdParobj = fdPar(daybasis365,Lfdobj=int2Lfd(2),lambda=1e4)
 
 precfd = smooth.basis(1:365,y,fdParobj)
 
-
+#ggplot(precfd,aes(x = 1:365,y = precfd$fd)) + geom_point()
+windows()
 plot(1:365,y,col=2,xlab='day',ylab='precipitation',main='Vancouver',
 	cex.lab=1.5,cex.axis=1.5)
-lines(precfd$fd,lwd=2,col=4)
+lines(precfd$fd,lwd=2,col=4) #why lines can deal with data of class fdSmooth?
 
+#what is this?
 infMat = bvals%*%precfd$y2cMap
 
 matplot(infMat[,c(20,180,300)],type='l',ylab='influence',xlab='day',
 	main='Observations 20, 180, 300',cex.lab=1.5,cex.axis=1.5,lwd=2)
 
-
+precfd = smooth.basis(1:365,y,harmLfd)
 harmLfd = vec2Lfd(c(0,(2*pi/365)^2,0), c(0, 365))
 harmfdvals = eval.fd(1:365,precfd$fd,harmLfd)
 
-
+windows()
 plot(1:365,harmfdvals,type='l',lwd=2,col=4,xlab='day',ylab='Harmonic Acceleration',
 	main ='Vancouver',cex.lab=1.5,cex.axis=1.5)
 

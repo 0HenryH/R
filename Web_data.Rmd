@@ -1,0 +1,32 @@
+---
+title: "Web_data_Examples"
+author: "HenryH"
+date: "2018.7.16"
+output: 
+  pdf_document: 
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,results = FALSE,warning = FALSE,message = FALSE)
+```
+
+## Examples in Datacamp
+
+1. A full edition
+```{r Delay request}
+    get_pageviews <- function(article_title){
+    url <- paste(
+    "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents", 
+    article_title, 
+    "daily/2015100100/2015103100", 
+    sep = "/"
+  )
+  response <- GET(url, user_agent("my@email.com this is a test")) 
+  # Is there an HTTP error?
+  if(http_error(response)){ 
+    # Throw an R error
+    stop("the request failed") 
+    }
+}
+```
